@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import logo from "../assets/logo/logo.svg";
 
 export default function Footer() {
-  // Animation variants for footer sections
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -14,7 +13,6 @@ export default function Footer() {
     },
   };
 
-  // Animation variants for social icons
   const iconVariants = {
     hover: { scale: 1.2, color: "#2563eb", transition: { duration: 0.3 } },
   };
@@ -23,7 +21,6 @@ export default function Footer() {
     <footer className="bg-gradient-to-t from-gray-900 to-gray-800 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
           <motion.div
             className="flex flex-col space-y-4"
             variants={sectionVariants}
@@ -38,7 +35,6 @@ export default function Footer() {
             <p className="text-gray-300 text-sm">
               Empowering education through innovative courses and resources.
             </p>
-            {/* Social Media Icons */}
             <div className="flex space-x-4">
               {[
                 { Icon: Facebook, href: "#facebook" },
@@ -58,7 +54,6 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Navigation Links */}
           <motion.div
             className="flex flex-col space-y-4"
             variants={sectionVariants}
@@ -78,7 +73,6 @@ export default function Footer() {
             ))}
           </motion.div>
 
-          {/* Contact Info */}
           <motion.div
             className="flex flex-col space-y-4"
             variants={sectionVariants}
@@ -103,7 +97,6 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Newsletter Signup */}
           <motion.div
             className="flex flex-col space-y-4"
             variants={sectionVariants}
@@ -128,7 +121,6 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Bottom Bar */}
         <motion.div
           className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm"
           variants={sectionVariants}

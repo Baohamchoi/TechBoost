@@ -15,7 +15,6 @@ function Navbar() {
     hover: { scale: 1.1, color: "#2563eb", transition: { duration: 0.3 } },
   };
 
-  // Animation variants for mobile menu
   const mobileMenuVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: {
