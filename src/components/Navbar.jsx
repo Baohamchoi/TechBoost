@@ -1,14 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../assets/logo/logo.svg";
 import { Search, Menu, ShoppingCart, Globe, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import avt from "../assets/avatar/avt1.jpg";
 
-function Navbar() {
+function Navbar({ onLoginClick, onResgisterClick, onLoginSuccess }) {
+  const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+    if (token && storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (onLoginSuccess) {
+      setUser(onLoginSuccess);
+    }
+  }, [onLoginSuccess]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
   };
 
   const linkVariants = {
@@ -36,13 +58,13 @@ function Navbar() {
         <div className="flex justify-between items-center h-16">
           <Link to="/">
             <motion.div
-                className="flex items-center space-x-3"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
+              className="flex items-center space-x-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-                <img src={logo} alt="TeachBoost Logo" className="h-10 w-auto" />
-                <span className="text-2xl font-bold text-blue-600">TeachBoost</span>
+              <img src={logo} alt="TeachBoost Logo" className="h-10 w-auto" />
+              <span className="text-2xl font-bold text-blue-600">TeachBoost</span>
             </motion.div>
           </Link>
 
@@ -73,22 +95,46 @@ function Navbar() {
               </motion.a>
             ))}
 
-            <motion.a
-              href="#login"
-              className="text-gray-700 font-medium"
-              variants={linkVariants}
-              whileHover="hover"
-            >
-              Login
-            </motion.a>
-            <motion.a
-              href="#signup"
-              className="bg-blue-600 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-blue-700 transition-colors duration-300"
-              variants={linkVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              Sign Up
-            </motion.a>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <motion.img
+                  src={avt}
+                  alt="User Avatar"
+                  className="h-8 w-8 rounded-full"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.button
+                  onClick={handleLogout}
+                  className="text-gray-700 font-medium"
+                  variants={linkVariants}
+                  whileHover="hover"
+                >
+                  Logout
+                </motion.button>
+              </div>
+            ) : (
+              <>
+                <motion.a
+                  href="#login"
+                  className="text-gray-700 font-medium ml-10"
+                  variants={linkVariants}
+                  whileHover="hover"
+                  onClick={onLoginClick}
+                >
+                  Login
+                </motion.a>
+                <motion.a
+                  href="#signup"
+                  className="bg-blue-600 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-blue-700 transition-colors duration-300"
+                  variants={linkVariants}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={onResgisterClick}
+                >
+                  Sign Up
+                </motion.a>
+              </>
+            )}
 
             <motion.a
               href="#cart"
@@ -162,22 +208,51 @@ function Navbar() {
                 </motion.a>
               ))}
 
-              <motion.a
-                href="#login"
-                className="text-gray-700 font-medium"
-                variants={mobileLinkVariants}
-                onClick={toggleMenu}
-              >
-                Login
-              </motion.a>
-              <motion.a
-                href="#signup"
-                className="bg-blue-600 text-white px-5 py-2 rounded-full font-medium text-center shadow-md hover:bg-blue-700 transition-colors duration-300"
-                variants={mobileLinkVariants}
-                onClick={toggleMenu}
-              >
-                Sign Up
-              </motion.a>
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <motion.img
+                    src={avt}
+                    alt="User Avatar"
+                    className="h-8 w-8 rounded-full"
+                    variants={mobileLinkVariants}
+                  />
+                  <motion.button
+                    onClick={() => {
+                      handleLogout();
+                      toggleMenu();
+                    }}
+                    className="text-gray-700 font-medium"
+                    variants={mobileLinkVariants}
+                  >
+                    Logout
+                  </motion.button>
+                </div>
+              ) : (
+                <>
+                  <motion.a
+                    href="#login"
+                    className="text-gray-700 font-medium"
+                    variants={mobileLinkVariants}
+                    onClick={() => {
+                      onLoginClick();
+                      toggleMenu();
+                    }}
+                  >
+                    Login
+                  </motion.a>
+                  <motion.a
+                    href="#signup"
+                    className="bg-blue-600 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-blue-700 transition-colors duration-300"
+                    variants={mobileLinkVariants}
+                    onClick={() => {
+                      onResgisterClick();
+                      toggleMenu();
+                    }}
+                  >
+                    Sign Up
+                  </motion.a>
+                </>
+              )}
 
               <motion.a
                 href="#cart"

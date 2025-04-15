@@ -40,7 +40,6 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bg_home})` }}>
-      {/* Hero Section */}
       <motion.section
         className="flex flex-col items-center justify-center text-center text-white bg-black opacity-70 py-24 px-4"
         variants={sectionVariants}
@@ -63,7 +62,6 @@ function Home() {
         </motion.button>
       </motion.section>
 
-      {/* Features Section */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -92,7 +90,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
       <motion.section
         className="flex flex-col items-center justify-center text-center text-white bg-black opacity-70 py-16 px-4"
         variants={sectionVariants}
